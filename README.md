@@ -8,7 +8,7 @@ Let’s dive in!
 
 ## Requirements
 
-* conda or pyenv (python=3.12)
+* python (version=3.12)
 
 ## 1. Setup Tabsdata Instance
 
