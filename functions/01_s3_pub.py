@@ -16,7 +16,7 @@ s3_credentials = td.S3AccessKeyCredentials(USERNAME,PASSWORD)
 @td.publisher(
     source=td.S3Source(
         [
-            f"{AWS_BUCKET.secret_value}/customers.csv",
+            f"{AWS_BUCKET.secret_value}/tabsdata/customers.csv",
         ],
         s3_credentials,
         region = f"{AWS_REGION.secret_value}",
