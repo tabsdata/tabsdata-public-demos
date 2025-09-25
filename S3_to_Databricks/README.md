@@ -16,7 +16,7 @@ Let’s dive in!
 
 ```sh
 git clone https://github.com/tabsdata/tabsdata-public-demos.git
-cd S3_to_Databricks
+cd tabsdata-public-demos/S3_to_Databricks
 ```
 
 ### 1.2. [OPTIONAL] Create a virtual environment of your choice 
