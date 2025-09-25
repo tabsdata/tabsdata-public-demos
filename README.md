@@ -1,3 +1,11 @@
+# S3 --> Databricks Demo (`S3_to_Databricks`)
+
+In this demo, we setup a simple tabsdata instance that publishes data from S3 and subscribes it into Databricks. 
+
+You may use this setup as a starting point and then iterate from here to customize the function code and instance to your needs
+
+Let’s dive in!
+
 ## Requirements
 
 * conda or pyenv (python=3.12)
@@ -11,7 +19,7 @@ git clone https://github.com/tabsdata/tabsdata-public-demos.git
 cd S3_to_Databricks
 ```
 
-### 1.2. Create a virtual environment of your choice
+### 1.2. Create a virtual environment of your choice [OPTIONAL]
 
 ```sh
 conda create -y --name  tabsdata python=3.12
@@ -25,13 +33,26 @@ pip install tabsdata --upgrade
 
 ### 1.4 Configure Credentials
 
-[source.sh](./source.sh)Set your AWS and Databricks configuration and credentials in [source.sh](./source.sh).
+Set your AWS and Databricks configuration and credentials in [source.sh](./source.sh).
+
+### 1.5 [OPTIONAL] Make credentials available in terminal
+
+Your functions will reference the variables within [source.sh](./source.sh) during function registration. These variables must be available in the terminal shell when you register or update your functions. If you plan to run register or update CLI commands that are not covered in this demo, you must make these variable available in the terminal you will run the CLI commands for your functions to be able to access them.
+
+```sh
+source ./source.sh
+```
 
 ### 1.5 Register Tabsdata Functions
+
+The [setup-tabsdata.sh](./source.sh) script bundles all the Tabsdata CLI commands necessary to setup your Tabsdata instance and workflow from S3 --> Databricks.
 
 ```bash
 ./setup-tabsdata.sh
 ```
+
+If you feel more comfortable manually running the CLI commands, you can pull them out of the shell script and run them manually. 
+
 ## 2. Run Workflow
 
 ### 2.1 Trigger Publisher
