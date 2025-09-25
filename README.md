@@ -1,45 +1,45 @@
-# Requirements
+## Requirements
 
 * conda or pyenv (python=3.12)
 
-# 1.0 Setup Tabsdata Instance
+## 1. Setup Tabsdata Instance
 
-## 1.0 Clone Github Repo and hop into project directory
+### 1.1. Clone Github Repo and hop into project directory
 
 ```sh
 git clone https://github.com/tabsdata/tabsdata-public-demos.git
 cd S3_to_Databricks
 ```
 
-## 1.0 Create a virtual environment of your choice
+### 1.2. Create a virtual environment of your choice
 
 ```sh
 conda create -y --name  tabsdata python=3.12
 conda activate tabsdata
 ```
-## 1.1 Install Tabsdata
+### 1.3. Install Tabsdata
 
 ```sh
 pip install tabsdata --upgrade
 ```
 
-## 1.2 Configure Credentials
+### 1.4 Configure Credentials
 
 [source.sh](./source.sh)Set your AWS and Databricks configuration and credentials in [source.sh](./source.sh).
 
-## 1.3 Register Tabsdata Functions
+### 1.5 Register Tabsdata Functions
 
 ```bash
 ./setup-tabsdata.sh
 ```
-# 2.0 Run Workflow
+## 2. Run Workflow
 
-## 2.1 Trigger Publisher
+### 2.1 Trigger Publisher
 ```sh
 td fn trigger --coll workflow --name s3_pub
 ```
 
-# Notes
+## Notes
 
 The shell script bundles terminal commands to:
   1. Set your credentials as environmental variables
