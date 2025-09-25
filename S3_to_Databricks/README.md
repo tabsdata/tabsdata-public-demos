@@ -51,7 +51,7 @@ source ./source.sh
 
 ### 1.5 Register Tabsdata Functions
 
-The [setup-tabsdata.sh](./source.sh) script bundles all the Tabsdata CLI commands necessary to setup your Tabsdata instance and workflow from S3 --> Databricks.
+The [setup-tabsdata.sh](./setup-tabsdata.sh) script bundles all the Tabsdata CLI commands necessary to setup your Tabsdata instance and workflow from S3 --> Databricks.
 
 ```bash
 ./setup-tabsdata.sh
