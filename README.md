@@ -60,6 +60,31 @@ If you feel more comfortable manually running the CLI commands, you can pull the
 td fn trigger --coll workflow --name s3_pub
 ```
 
+## 3. Monitor Results
+
+### 3.1 Sample Data in CLI
+
+```sh
+td table sample --coll workflow --name customers_raw
+td table sample --coll workflow --name customers_processed
+```
+
+### 3.2 Sample Data in UI
+
+Access our [UI](http://localhost:2457/login) and login with the following credentials 
+
+Username:
+```admin```
+
+Password:
+```tabsdata```
+
+Role:
+```sys_admin```
+
+
+More info on UI is available in our [documentation](https://docs.tabsdata.com/latest/guide/user_interface/main.html)
+
 ## Notes
 
 The shell script bundles terminal commands to:
