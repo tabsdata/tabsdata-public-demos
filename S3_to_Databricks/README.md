@@ -29,6 +29,12 @@ conda activate tabsdata
 
 ```sh
 pip install tabsdata --upgrade
+pip install 'tabsdata['databricks']'
+```
+Depending on your terminal, the databricks dependency command might be this if the one above fails
+
+```sh
+pip install tabsdata[“databricks”]
 ```
 
 ### 1.4 Configure Credentials
