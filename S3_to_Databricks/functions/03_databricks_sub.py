@@ -1,6 +1,5 @@
 import tabsdata as td
 import os
-from td_sync import sync_with_server
 
 DATABRICKS_HOST_URL = td.EnvironmentSecret("DATABRICKS_HOST_URL")
 DATABRICKS_TOKEN = td.EnvironmentSecret("DATABRICKS_TOKEN")
@@ -26,5 +25,3 @@ WAREHOUSE = td.EnvironmentSecret("WAREHOUSE")
 
 def databricks_sub(tf1: td.TableFrame, tf2: td.TableFrame):
     return tf1, tf2
-
-sync_with_server('workflow', True)

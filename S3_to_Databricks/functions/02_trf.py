@@ -1,6 +1,5 @@
 import tabsdata as td
 
-
 @td.transformer(
     input_tables=["customers_raw"],
     output_tables=["customers_processed"],

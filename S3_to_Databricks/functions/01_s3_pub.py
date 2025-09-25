@@ -10,9 +10,6 @@ AWS_BUCKET = td.EnvironmentSecret("AWS_BUCKET")
 
 s3_credentials = td.S3AccessKeyCredentials(USERNAME,PASSWORD)
 
-
-
-
 @td.publisher(
     source=td.S3Source(
         [
