@@ -19,7 +19,7 @@ git clone https://github.com/tabsdata/tabsdata-public-demos.git
 cd S3_to_Databricks
 ```
 
-### 1.2. Create a virtual environment of your choice [OPTIONAL]
+### 1.2. [OPTIONAL] Create a virtual environment of your choice 
 
 ```sh
 conda create -y --name  tabsdata python=3.12
