@@ -43,7 +43,7 @@ Set your AWS and Databricks configuration and credentials in [source.sh](./sourc
 
 ### 1.5 [OPTIONAL] Make credentials available in terminal
 
-Your functions will reference the variables within [source.sh](./source.sh) during function registration. These variables must be available in the terminal shell when you register or update your functions. If you plan to run register or update CLI commands that are not covered in this demo, you must make these variable available in the terminal you will run the CLI commands for your functions to be able to access them.
+Your functions will reference the variables within [source.sh](./source.sh) when you register or update them. These variables must be loaded into your terminal environment before running any ```td fn register``` or ```td fn update``` commands. If you plan to run register or update commands outside this demo, first load the variables in the shell you will use with:
 
 ```sh
 source ./source.sh
