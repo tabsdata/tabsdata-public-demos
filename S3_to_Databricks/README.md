@@ -62,10 +62,11 @@ If you feel more comfortable manually running the CLI commands, you can pull the
 ## 2. Run Workflow
 
 ### 2.1 Trigger Publisher
+
 ```sh
 td fn trigger --coll workflow --name s3_pub
 ```
-
+Every time your trigger a new invocation of your publisher, a new version of data is created in your Tabsdata Tables. 
 ## 3. Monitor Results
 
 ### 3.1 Sample Data in CLI
