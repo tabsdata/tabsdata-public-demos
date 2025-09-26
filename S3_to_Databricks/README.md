@@ -41,7 +41,7 @@ pip install tabsdata[“databricks”]
 
 Set your AWS and Databricks configuration and credentials in [source.sh](./source.sh).
 
-### 1.5 [OPTIONAL] Make credentials available in terminal
+### 1.5 Make credentials available in terminal
 
 Your functions will reference the variables within [source.sh](./source.sh) when you register or update them. These variables must be loaded into your terminal environment before running any ```td fn register``` or ```td fn update``` commands. If you plan to run register or update commands outside this demo, first load the variables in the shell you will use with:
 
@@ -49,15 +49,36 @@ Your functions will reference the variables within [source.sh](./source.sh) when
 source ./source.sh
 ```
 
-### 1.5 Register Tabsdata Functions
+### 1.5 [OPTIONAL] Delete Previous Instance of Tabsdata
 
-The [setup-tabsdata.sh](./setup-tabsdata.sh) script bundles all the Tabsdata CLI commands necessary to setup your Tabsdata instance and workflow from S3 --> Databricks.
-
-```bash
-./setup-tabsdata.sh
+```sh
+tdserver stop --instance s3_to_databricks
+echo yes | tdserver delete --instance s3_to_databricks
 ```
 
-If you feel more comfortable manually running the CLI commands, you can pull them out of the shell script and run them manually. 
+### 1.6 [OPTIONAL] Start Tabsdata Server
+
+```sh
+tdserver start --instance s3_to_databricks
+```
+
+### 1.7 [OPTIONAL] Login
+
+```sh
+td login --server ${TD_SERVER} --user ${TD_USER} --password ${TD_PASSWORD} --role ${TD_ROLE}
+```
+
+### 1.8 [OPTIONAL] Create Collection and Register Functions
+
+```sh
+td collection create --name workflow
+
+(cd functions;
+td fn register --coll workflow --path 01_s3_pub.py::s3_pub
+td fn register --coll workflow --path 02_trf.py::trf
+td fn register --coll workflow --path 03_databricks_sub.py::databricks_sub
+)
+```
 
 ## 2. Run Workflow
 
