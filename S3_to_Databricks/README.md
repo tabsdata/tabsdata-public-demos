@@ -56,19 +56,19 @@ tdserver stop --instance s3_to_databricks
 echo yes | tdserver delete --instance s3_to_databricks
 ```
 
-### 1.6 [OPTIONAL] Start Tabsdata Server
+### 1.6 Start Tabsdata Server
 
 ```sh
 tdserver start --instance s3_to_databricks
 ```
 
-### 1.7 [OPTIONAL] Login
+### 1.7 Login
 
 ```sh
 td login --server ${TD_SERVER} --user ${TD_USER} --password ${TD_PASSWORD} --role ${TD_ROLE}
 ```
 
-### 1.8 [OPTIONAL] Create Collection and Register Functions
+### 1.8 Create Collection and Register Functions
 
 ```sh
 td collection create --name workflow
