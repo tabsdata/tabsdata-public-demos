@@ -71,7 +71,7 @@ From `tabsdata-demo-daniel`:
 - `producers/log/`: log producer Docker assets
 - `producers/kafka/`: Kafka producer Docker assets
 - `data/sql/`: SQL seed files (for MySQL setup)
-- `data/logs/`: generated log files
+- `data/td-logs/`: generated log files
 
 ## Notes
 
