@@ -1,0 +1,16 @@
+#
+# Copyright 2025. Tabs Data Inc.
+#
+
+# Requirements for running Tabsdata examples
+
+
+mysql-connector-python==9.2.0
+psycopg2-binary==2.9.10
+oracledb==3.0.0
+snowflake-connector-python==3.16.0
+snowflake-sqlalchemy==1.7.6
+databricks-sdk==0.57.0
+databricks-sql-connector==4.0.4
+databricks-sqlalchemy==2.0.7
+s3fs==2025.5.1

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+# Runtime logs
+data/logs/*
+!data/logs/.gitkeep
