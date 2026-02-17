@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from logging.handlers import TimedRotatingFileHandler
 
 LOG_DIR = "/logs"
-BASE_FILENAME = "web_airline.log"
+BASE_FILENAME = "td-web_airline.log"
 
 BACKUP_COUNT = 10
 ROTATE_EVERY_SECONDS = 30
