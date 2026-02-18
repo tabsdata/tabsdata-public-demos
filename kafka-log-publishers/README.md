@@ -5,9 +5,24 @@
 ## 1. Requirements
 
 - Docker Desktop (or Docker Engine) installed and running
+- `git`
 - Python 3.12+
 - `pip`
 - Internet access to pull Docker images and Python packages
+
+If `git` is missing on macOS:
+
+```bash
+xcode-select --install
+# or, if Homebrew is installed:
+brew install git
+```
+
+If `git` is missing on Linux:
+
+```bash
+sudo dnf install -y git || sudo yum install -y git
+```
 
 ## 2. Clone the repo
 
