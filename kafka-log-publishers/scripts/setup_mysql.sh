@@ -29,8 +29,18 @@ docker run --name td-sample-data \
   -d \
   mysql:8.0
 
-print_step "Waiting for MySQL startup"
-sleep 8
+print_step "Waiting for MySQL startup and root login readiness"
+for i in {1..60}; do
+  if docker exec -i td-sample-data mysql -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1;" >/dev/null 2>&1; then
+    break
+  fi
+  if [ "$i" -eq 60 ]; then
+    print_error "MySQL did not become ready for root login"
+    docker logs td-sample-data --tail 120 || true
+    exit 1
+  fi
+  sleep 2
+done
 
 print_step "Creating schemas and loading seed data"
 docker exec -i td-sample-data mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e "DROP DATABASE IF EXISTS airportdb; CREATE DATABASE airportdb;"
