@@ -4,6 +4,8 @@
 # Copyright 2026 Tabs Data Inc.
 #
 
+set -euo pipefail
+
 CONTAINER_NAME="td-grok-log-producer"
 IMAGE_NAME="grok-log-producer-image"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -34,6 +36,13 @@ print_step "Starting container: ${CONTAINER_NAME}"
 docker run -d --rm --name "${CONTAINER_NAME}" \
   -v "${HOST_LOG_DIR}:/logs" \
   "${IMAGE_NAME}"
+
+sleep 2
+if ! docker ps --format '{{.Names}}' | grep -qx "${CONTAINER_NAME}"; then
+  print_error "Log producer failed to stay running"
+  docker logs "${CONTAINER_NAME}" 2>/dev/null || true
+  exit 1
+fi
 
 print_success "Log generator is running"
 print_kv "Container" "${CONTAINER_NAME}"

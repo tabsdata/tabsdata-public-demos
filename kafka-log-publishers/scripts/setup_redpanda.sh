@@ -4,6 +4,8 @@
 # Copyright 2026 Tabs Data Inc.
 #
 
+set -euo pipefail
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 PRODUCER_DIR="${ROOT_DIR}/producers/kafka"
@@ -14,12 +16,12 @@ source "${SCRIPT_DIR}/ui.sh"
 # Stop and remove existing containers
 print_header "Redpanda + Kafka Producer Setup"
 print_step "Stopping existing Redpanda and producer containers"
-docker kill td-redpanda 2>/dev/null
-docker rm td-redpanda 2>/dev/null
-docker kill td-redpanda-flights-producer 2>/dev/null
-docker rm td-redpanda-flights-producer 2>/dev/null
-docker kill td-redpanda-console 2>/dev/null
-docker rm td-redpanda-console 2>/dev/null
+docker kill td-redpanda 2>/dev/null || true
+docker rm td-redpanda 2>/dev/null || true
+docker kill td-redpanda-flights-producer 2>/dev/null || true
+docker rm td-redpanda-flights-producer 2>/dev/null || true
+docker kill td-redpanda-console 2>/dev/null || true
+docker rm td-redpanda-console 2>/dev/null || true
 
 # Start Redpanda
 print_step "Starting Redpanda container"
@@ -81,6 +83,13 @@ docker run -d --rm --name td-redpanda-flights-producer \
     --user "${RP_ADMIN_USER}" \
     --password "${RP_ADMIN_PASS}"
 
+sleep 2
+if ! docker ps --format '{{.Names}}' | grep -qx 'td-redpanda-flights-producer'; then
+  print_error "Flight events producer failed to stay running"
+  docker logs td-redpanda-flights-producer 2>/dev/null || true
+  exit 1
+fi
+
 print_success "Redpanda and producer are running"
 print_kv "Kafka (function)" "${RP_HOST_FUNCTION}:${RP_PORT_KAFKA_FUNCTION}"
 print_kv "Kafka (docker)" "${RP_HOST_DOCKER}:${RP_PORT_KAFKA_DOCKER}"
@@ -106,5 +115,12 @@ kafka:
   --entrypoint /bin/sh \
   redpandadata/console:latest \
   -c 'echo "$CONSOLE_CONFIG_FILE" > /tmp/config.yml && /app/console -config.filepath=/tmp/config.yml'
+
+sleep 2
+if ! docker ps --format '{{.Names}}' | grep -qx 'td-redpanda-console'; then
+  print_error "Redpanda Console failed to stay running"
+  docker logs td-redpanda-console 2>/dev/null || true
+  exit 1
+fi
 
 print_success "Redpanda Console is running"
