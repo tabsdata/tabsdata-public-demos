@@ -1,7 +1,6 @@
 #
 # Copyright 2024 Tabs Data Inc.
 #
-source.sh
 
 __pycache__/
 __pypackages__/

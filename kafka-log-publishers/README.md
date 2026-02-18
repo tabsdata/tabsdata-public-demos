@@ -48,7 +48,7 @@ docker ps
 
 ## 6. Run the demo setup
 
-From `kafka-log-publishers`:
+From `tabsdata-public-demos/kafka-log-publishers`:
 
 ```bash
 ./setup-tabsdata.sh
