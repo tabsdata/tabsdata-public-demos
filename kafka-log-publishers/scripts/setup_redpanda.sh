@@ -8,10 +8,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 PRODUCER_DIR="${ROOT_DIR}/producers/kafka"
 source "${ROOT_DIR}/source.sh"
+source "${SCRIPT_DIR}/ui.sh"
 
 
 # Stop and remove existing containers
-echo "Stopping and removing existing Redpanda and producer containers..."
+print_header "Redpanda + Kafka Producer Setup"
+print_step "Stopping existing Redpanda and producer containers"
 docker kill td-redpanda 2>/dev/null
 docker rm td-redpanda 2>/dev/null
 docker kill td-redpanda-flights-producer 2>/dev/null
@@ -20,7 +22,7 @@ docker kill td-redpanda-console 2>/dev/null
 docker rm td-redpanda-console 2>/dev/null
 
 # Start Redpanda
-echo "Starting Redpanda container..."
+print_step "Starting Redpanda container"
 docker run -d --rm --name td-redpanda \
   --entrypoint /bin/sh \
   -e RP_HOST_FUNCTION="${RP_HOST_FUNCTION}" \
@@ -67,11 +69,11 @@ docker run -d --rm --name td-redpanda \
 '
 
 # Build the producer image
-echo "Building td-redpanda-flights-producer image..."
+print_step "Building Kafka producer image"
 docker build -t redpanda-flights-producer-image -f "${PRODUCER_DIR}/Dockerfile" "${PRODUCER_DIR}"
 
 # Start the producer
-echo "Starting td-redpanda-flights-producer container..."
+print_step "Starting flight events producer container"
 docker run -d --rm --name td-redpanda-flights-producer \
   redpanda-flights-producer-image \
   python events_producer.py \
@@ -79,17 +81,17 @@ docker run -d --rm --name td-redpanda-flights-producer \
     --user "${RP_ADMIN_USER}" \
     --password "${RP_ADMIN_PASS}"
 
-echo
-echo ">>> Redpanda instance created (function): ${RP_HOST_FUNCTION}:${RP_PORT_KAFKA_FUNCTION}"
-echo ">>> Redpanda instance created (docker): ${RP_HOST_DOCKER}:${RP_PORT_KAFKA_DOCKER}"
-echo ">>> Schema Registry: ${RP_HOST_DOCKER}:${RP_PORT_SCHEMA}"
-echo ">>> Admin API: ${RP_HOST_DOCKER}:${RP_PORT_ADMIN}"
-echo ">>> Admin user: ${RP_ADMIN_USER} password: ${RP_ADMIN_PASS}"
-echo ">>> Event producer is running in a separate container: td-redpanda-flights-producer"
-echo
+print_success "Redpanda and producer are running"
+print_kv "Kafka (function)" "${RP_HOST_FUNCTION}:${RP_PORT_KAFKA_FUNCTION}"
+print_kv "Kafka (docker)" "${RP_HOST_DOCKER}:${RP_PORT_KAFKA_DOCKER}"
+print_kv "Schema Registry" "${RP_HOST_DOCKER}:${RP_PORT_SCHEMA}"
+print_kv "Admin API" "${RP_HOST_DOCKER}:${RP_PORT_ADMIN}"
+print_kv "Admin user" "${RP_ADMIN_USER}"
+print_kv "Producer container" "td-redpanda-flights-producer"
 
 docker rm -f td-redpanda-console 2>/dev/null
 
+print_step "Starting Redpanda Console on http://localhost:8080"
 docker run -d --rm --name td-redpanda-console -p 8080:8080 \
   -e CONSOLE_CONFIG_FILE="
 kafka:
@@ -104,3 +106,5 @@ kafka:
   --entrypoint /bin/sh \
   redpandadata/console:latest \
   -c 'echo "$CONSOLE_CONFIG_FILE" > /tmp/config.yml && /app/console -config.filepath=/tmp/config.yml'
+
+print_success "Redpanda Console is running"
