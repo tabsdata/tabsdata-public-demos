@@ -66,7 +66,7 @@ From `tabsdata-demo-daniel`:
 
 - `scripts/`: setup and orchestration scripts
 - `pipelines/sql/`: SQL ingestion publisher/subscriber functions
-- `pipelines/logs/`: log ingestion functions
+- `pipelines/log-publisher/`: log ingestion functions
 - `pipelines/kafka/`: Kafka ingestion functions
 - `producers/log/`: log producer Docker assets
 - `producers/kafka/`: Kafka producer Docker assets

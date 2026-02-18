@@ -17,15 +17,15 @@ docker rm "${CONTAINER_NAME}" 2>/dev/null || true
 
 echo "Building ${IMAGE_NAME} image..."
 mkdir -p "${HOST_LOG_DIR}"
-echo "Clearing existing log files in ${HOST_LOG_DIR}..."
-for file in "${HOST_LOG_DIR}"/td-web_airline.log*; do
-  [ -f "${file}" ] || continue
-  filename="$(basename "${file}")"
+# echo "Clearing existing log files in ${HOST_LOG_DIR}..."
+# for file in "${HOST_LOG_DIR}"/td-web_airline.log*; do
+#   [ -f "${file}" ] || continue
+#   filename="$(basename "${file}")"
 
-  if [[ "${filename}" == "td-web_airline.log" || "${filename}" =~ ^td-web_airline\.log\.[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]]; then
-    rm -f "${file}"
-  fi
-done
+#   if [[ "${filename}" == "td-web_airline.log" || "${filename}" =~ ^td-web_airline\.log\.[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]]; then
+#     rm -f "${file}"
+#   fi
+# done
 docker build -t "${IMAGE_NAME}" "${PRODUCER_DIR}"
 
 echo "Starting ${CONTAINER_NAME} container..."
