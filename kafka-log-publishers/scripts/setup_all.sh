@@ -37,7 +37,7 @@ run_cmd "Creating collection: airport" td collection create --name airport
 
 subscribe="True"
 
-(cd "${ROOT_DIR}/pipelines/sql";
+(cd "${ROOT_DIR}/tabsdata_functions/sql";
   run_cmd "Registering SQL publisher" td fn register --coll airport --path 01_flight_pub.py::flight_pub
   if [ "$subscribe" = "True" ]; then
       run_cmd "Registering SQL subscriber" td fn register --coll airport --path 02_mysql_sub.py::mysql_sub --update
@@ -50,12 +50,12 @@ print_success "Registered SQL ingestion functions"
 
 td fn trigger --coll airport --name flight_pub
 
-(cd "${ROOT_DIR}/pipelines/log-publisher";
+(cd "${ROOT_DIR}/tabsdata_functions/log-publisher";
   run_cmd "Registering log publisher" td fn register --coll airport --path 09_log_pub.py::publish_air_web_page_views --update
 )
 
 run_cmd "Creating collection: flight_streaming" td collection create --name flight_streaming
-(cd "${ROOT_DIR}/pipelines/kafka";
+(cd "${ROOT_DIR}/tabsdata_functions/kafka";
   run_cmd "Registering Kafka publisher" td fn register --coll flight_streaming --path 08_flight_events_pub.py::flight_event_publisher --update
 )
 td fn trigger --coll airport --name publish_air_web_page_views
