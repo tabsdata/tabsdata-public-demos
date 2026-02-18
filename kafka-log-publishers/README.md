@@ -1,6 +1,6 @@
 # Tabsdata Airport Demo
 
-[![Watch the demo video](/Users/danieladayev/demos/tabsdata-public-demos/images/thumbnail.png)](https://www.youtube.com/watch?v=tFJc6zKu3nk)
+[![Watch the demo video](../images/thumbnail.png)](https://www.youtube.com/watch?v=tFJc6zKu3nk)
 
 ## Quickstart (Beginner Friendly)
 
