@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/../source.sh"
 source "${SCRIPT_DIR}/ui.sh"
 TABLE_SQL="${SCRIPT_DIR}/../data/sql/flight-only.sql"
-TABLE_NAME="flights"
+TABLE_NAME="flight"
 
 print_header "MySQL Setup"
 
@@ -21,7 +21,7 @@ fi
 
 print_step "Resetting MySQL container"
 docker kill td-sample-data 2>/dev/null || true
-docker rm td-sample-data 2>/dev/null || true
+docker rm -v td-sample-data 2>/dev/null || true
 print_step "Starting MySQL container"
 docker run --name td-sample-data \
   -e MYSQL_ROOT_PASSWORD="${MYSQL_PASSWORD}" \
