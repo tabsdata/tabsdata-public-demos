@@ -54,4 +54,31 @@ if [ -z "${UI_SH_LOADED:-}" ]; then
   print_kv() {
     printf "  %b%-18s%b %s\n" "${UI_BOLD}" "$1:" "${UI_RESET}" "$2"
   }
+
+  run_cmd() {
+    local label="$1"
+    shift
+    print_step "${label}"
+    "$@" 2>&1 | sed 's/^/    | /'
+    local rc=${PIPESTATUS[0]}
+    if [ "${rc}" -ne 0 ]; then
+      print_error "${label} failed"
+      return "${rc}"
+    fi
+    print_success "${label}"
+  }
+
+  run_cmd_sh() {
+    local label="$1"
+    shift
+    local cmd="$*"
+    print_step "${label}"
+    bash -lc "${cmd}" 2>&1 | sed 's/^/    | /'
+    local rc=${PIPESTATUS[0]}
+    if [ "${rc}" -ne 0 ]; then
+      print_error "${label} failed"
+      return "${rc}"
+    fi
+    print_success "${label}"
+  }
 fi

@@ -7,65 +7,31 @@
 - Docker Desktop (or Docker Engine) installed and running
 - `git`
 - Python 3.12+
-- `pip`
-- Internet access to pull Docker images and Python packages
 
-If `git` is missing on macOS:
-
-```bash
-xcode-select --install
-# or, if Homebrew is installed:
-brew install git
-```
-
-If `git` is missing on Linux:
-
-```bash
-sudo dnf install -y git || sudo yum install -y git
-```
-
-If Docker is missing on Linux:
-
-```bash
-sudo dnf -y install dnf-plugins-core
-sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
-sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo systemctl start docker
-sudo usermod -aG docker "$USER"
-newgrp docker
-docker --version
-docker ps
-```
-
-If `dnf` is unavailable, use the equivalent `yum` packages/repo flow for your distro.
-
-Then log out and back in (or use `newgrp docker`) before running setup scripts in a new session.
-
-If you want Docker to auto-start on reboot:
-
-```bash
-sudo systemctl enable docker
-```
 
 ## 2. Clone the repo
 
 ```bash
-git clone <REPO_URL>
-cd tabsdata-airport-demo/tabsdata-demo-daniel
+git clone https://github.com/tabsdata/tabsdata-public-demos.git
+cd tabsdata-public-demos/kafka-log-publishers
 ```
 
 If you already cloned the repo, just `cd` into:
 
 ```bash
-cd /path/to/tabsdata-airport-demo/tabsdata-demo-daniel
+cd /path/to/tabsdata-public-demos/kafka-log-publishers
 ```
 
 ## 3. Create and activate a virtual environment
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3.12 -m venv tabsdata-venv
 ```
+
+```bash
+source tabsdata-venv/bin/activate
+```
+OR use conda/pyenv/etc.
 
 ## 4. Install Python dependencies
 
@@ -80,11 +46,9 @@ pip install mysql-connector-python
 docker ps
 ```
 
-If this fails, start Docker Desktop and run `docker ps` again.
-
 ## 6. Run the demo setup
 
-From `tabsdata-demo-daniel`:
+From `kafka-log-publishers`:
 
 ```bash
 ./setup-tabsdata.sh
