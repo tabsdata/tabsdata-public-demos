@@ -29,6 +29,13 @@ docker run --name td-sample-data \
   -d \
   mysql:8.0
 
+sleep 2
+if ! docker ps --format '{{.Names}}' | grep -qx 'td-sample-data'; then
+  print_error "MySQL container failed to stay running"
+  docker logs td-sample-data --tail 120 2>/dev/null || true
+  exit 1
+fi
+
 print_step "Waiting for MySQL startup and root login readiness"
 for i in {1..60}; do
   if docker exec -i td-sample-data mysql -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1;" >/dev/null 2>&1; then
@@ -47,6 +54,12 @@ docker exec -i td-sample-data mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e "DROP
 docker exec -i td-sample-data mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e "DROP DATABASE IF EXISTS td_processed_data; CREATE DATABASE td_processed_data;"
 docker exec -i td-sample-data mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} airportdb < "${TABLE_SQL}"
 docker exec -i td-sample-data mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e "SHOW TABLES IN airportdb; SELECT COUNT(*) AS ${TABLE_NAME}_rows FROM airportdb.${TABLE_NAME}; SHOW DATABASES LIKE 'td_processed_data';"
+
+if ! docker ps --format '{{.Names}}' | grep -qx 'td-sample-data'; then
+  print_error "MySQL container stopped unexpectedly after setup"
+  docker logs td-sample-data --tail 120 2>/dev/null || true
+  exit 1
+fi
 
 print_success "MySQL setup complete"
 print_kv "Endpoint" "${MYSQL_HOST}:${MYSQL_PORT}"
