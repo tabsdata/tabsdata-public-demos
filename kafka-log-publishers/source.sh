@@ -15,7 +15,19 @@ export HASHICORP_TOKEN=hashicorp-root-token
 
 export RP_HOST_FUNCTION=localhost
 export RP_PORT_KAFKA_FUNCTION=19092
-export RP_HOST_DOCKER=host.docker.internal
+
+# Docker Desktop resolves host.docker.internal on macOS/Windows.
+# Linux Docker typically reaches host services via the docker bridge gateway.
+if [ -z "${RP_HOST_DOCKER:-}" ]; then
+  case "$(uname -s)" in
+    Linux) RP_HOST_DOCKER_DEFAULT="172.17.0.1" ;;
+    *) RP_HOST_DOCKER_DEFAULT="host.docker.internal" ;;
+  esac
+  export RP_HOST_DOCKER="${RP_HOST_DOCKER_DEFAULT}"
+else
+  export RP_HOST_DOCKER
+fi
+
 export RP_PORT_KAFKA_DOCKER=29092
 
 # Backward-compatible aliases for scripts that still read RP_HOST/RP_PORT_KAFKA
@@ -34,6 +46,5 @@ export TD_SERVER=${TD_SERVER:=localhost:2457}
 export TD_USER=${TD_USER:=admin}
 export TD_PASSWORD=${TD_PASSWORD:=tabsdata}
 export TD_ROLE=${TD_ROLE:=sys_admin}
-
 
 
