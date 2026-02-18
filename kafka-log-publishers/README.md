@@ -1,5 +1,7 @@
 # Tabsdata Airport Demo
 
+[![Watch the demo video](https://img.youtube.com/vi/tFJc6zKu3nk/maxresdefault.jpg)](https://www.youtube.com/watch?v=tFJc6zKu3nk)
+
 ## Quickstart (Beginner Friendly)
 
 ## 1. Requirements
@@ -60,6 +62,12 @@ If you are running on a remote EC2 host and want local browser access, open SSH 
 # Tabsdata UI -> http://localhost:2457
 ssh -i <path/to/ssh/key> -N -L 2457:127.0.0.1:2457 <username@hostname>
 ```
+
+Then open `http://localhost:2457` and log in with:
+
+- User: `admin`
+- Password: `tabsdata`
+- Role: `sys_admin`
 
 ```bash
 # Redpanda Console -> http://localhost:8080
