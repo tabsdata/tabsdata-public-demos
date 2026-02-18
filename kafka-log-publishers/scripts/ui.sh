@@ -73,7 +73,7 @@ if [ -z "${UI_SH_LOADED:-}" ]; then
     shift
     local cmd="$*"
     print_step "${label}"
-    bash -lc "${cmd}" 2>&1 | sed 's/^/    | /'
+    eval "${cmd}" 2>&1 | sed 's/^/    | /'
     local rc=${PIPESTATUS[0]}
     if [ "${rc}" -ne 0 ]; then
       print_error "${label} failed"
