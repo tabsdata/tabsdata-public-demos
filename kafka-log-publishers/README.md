@@ -58,19 +58,19 @@ If you are running on a remote EC2 host and want local browser access, open SSH 
 
 ```bash
 # Tabsdata UI -> http://localhost:2457
-ssh -i ~/td-redhat.pem -N -L 2457:127.0.0.1:2457 ec2-user@ec2-3-143-248-77.us-east-2.compute.amazonaws.com
+ssh -i <path/to/ssh/key> -N -L 2457:127.0.0.1:2457 <username@hostname>
 ```
 
 ```bash
 # Redpanda Console -> http://localhost:8080
-ssh -i ~/td-redhat.pem -N -L 8080:127.0.0.1:8080 ec2-user@ec2-3-143-248-77.us-east-2.compute.amazonaws.com
+ssh -i <path/to/ssh/key> -N -L 8080:127.0.0.1:8080 <username@hostname>
 ```
 
 ## 7. What setup does
 
 - Starts Vault (HashiCorp) and writes demo secrets
 - Starts MySQL and recreates:
-  - `airportdb` (loads `flights` table)
+  - `airportdb` (loads `flight` table)
   - `td_processed_data`
 - Starts log producer and Redpanda producer containers
 - Starts Tabsdata server
