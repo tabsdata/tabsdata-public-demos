@@ -3,6 +3,8 @@
 # Copyright 2026. Tabs Data Inc.
 #
 
+set -euo pipefail
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/../source.sh"
 source "${SCRIPT_DIR}/ui.sh"
@@ -25,7 +27,7 @@ docker run --name td-sample-data \
   -e MYSQL_ROOT_PASSWORD="${MYSQL_PASSWORD}" \
   -p "${MYSQL_PORT}:3306" \
   -d \
-  mysql
+  mysql:8.0
 
 print_step "Waiting for MySQL startup"
 sleep 8

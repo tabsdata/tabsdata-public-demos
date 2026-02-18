@@ -24,6 +24,29 @@ If `git` is missing on Linux:
 sudo dnf install -y git || sudo yum install -y git
 ```
 
+If Docker is missing on Linux:
+
+```bash
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl start docker
+sudo usermod -aG docker "$USER"
+newgrp docker
+docker --version
+docker ps
+```
+
+If `dnf` is unavailable, use the equivalent `yum` packages/repo flow for your distro.
+
+Then log out and back in (or use `newgrp docker`) before running setup scripts in a new session.
+
+If you want Docker to auto-start on reboot:
+
+```bash
+sudo systemctl enable docker
+```
+
 ## 2. Clone the repo
 
 ```bash
@@ -65,6 +88,18 @@ From `tabsdata-demo-daniel`:
 
 ```bash
 ./setup-tabsdata.sh
+```
+
+If you are running on a remote EC2 host and want local browser access, open SSH tunnels from your laptop:
+
+```bash
+# Tabsdata UI -> http://localhost:2457
+ssh -i ~/td-redhat.pem -N -L 2457:127.0.0.1:2457 ec2-user@ec2-3-143-248-77.us-east-2.compute.amazonaws.com
+```
+
+```bash
+# Redpanda Console -> http://localhost:8080
+ssh -i ~/td-redhat.pem -N -L 8080:127.0.0.1:8080 ec2-user@ec2-3-143-248-77.us-east-2.compute.amazonaws.com
 ```
 
 ## 7. What setup does
