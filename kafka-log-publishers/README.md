@@ -56,6 +56,14 @@ From `tabsdata-public-demos/kafka-log-publishers`:
 ./setup-tabsdata.sh
 ```
 
+### Tabsdata UI Login
+
+Open `http://localhost:2457` and sign in with:
+
+- User: `admin`
+- Password: `tabsdata`
+- Role: `sys_admin`
+
 If you are running on a remote EC2 host and want local browser access, open SSH tunnels from your laptop:
 
 ```bash
