@@ -51,7 +51,7 @@ echo
 
 td fn trigger --coll airport --name flight_pub
 
-(cd "${ROOT_DIR}/pipelines/logs";
+(cd "${ROOT_DIR}/pipelines/log-publisher";
   td fn register --coll airport --path 09_log_pub.py::publish_air_web_page_views --update
 )
 
