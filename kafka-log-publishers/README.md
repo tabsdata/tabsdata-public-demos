@@ -79,9 +79,9 @@ ssh -i ~/td-redhat.pem -N -L 8080:127.0.0.1:8080 ec2-user@ec2-3-143-248-77.us-ea
 ## Folder Layout
 
 - `scripts/`: setup and orchestration scripts
-- `pipelines/sql/`: SQL ingestion publisher/subscriber functions
-- `pipelines/log-publisher/`: log ingestion functions
-- `pipelines/kafka/`: Kafka ingestion functions
+- `tabsdata_functions/sql/`: SQL ingestion publisher/subscriber functions
+- `tabsdata_functions/log-publisher/`: log ingestion functions
+- `tabsdata_functions/kafka/`: Kafka ingestion functions
 - `producers/log/`: log producer Docker assets
 - `producers/kafka/`: Kafka producer Docker assets
 - `data/sql/`: SQL seed files (for MySQL setup)
