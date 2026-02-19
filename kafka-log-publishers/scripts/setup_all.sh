@@ -20,7 +20,7 @@ print_header "Tabsdata Airport Demo Setup"
 "${SCRIPT_DIR}/setup_redpanda.sh"
 
 run_cmd "Stopping Tabsdata demo server instance" tdserver stop --instance demo 
-run_cmd_sh "Deleting Tabsdata demo server instance" "tdserver delete --instance demo --force" 
+run_cmd_sh "Deleting Tabsdata demo server instance" "printf 'yes\n' | tdserver delete --instance demo --force || true"
 
 run_cmd "Starting Tabsdata demo server instance" tdserver start --instance demo
 
