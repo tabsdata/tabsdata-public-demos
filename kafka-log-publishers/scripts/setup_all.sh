@@ -14,8 +14,6 @@ source "${SCRIPT_DIR}/ui.sh"
 print_header "Tabsdata Airport Demo Setup"
 "${SCRIPT_DIR}/preflight.sh"
 
-run_cmd "Installing Python dependencies from requirements.txt" python3 -m pip install -r "${ROOT_DIR}/requirements.txt"
-
 "${SCRIPT_DIR}/setup_hashicorp.sh"
 "${SCRIPT_DIR}/setup_mysql.sh"
 "${SCRIPT_DIR}/setup_log_producer.sh"
