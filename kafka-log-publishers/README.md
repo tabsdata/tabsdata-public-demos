@@ -14,7 +14,7 @@
 ## 2. Create and activate a virtual environment
 
 ```bash
-python3.12 -m venv tabsdata-venv
+python -m venv tabsdata-venv
 ```
 
 ```bash
