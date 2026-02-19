@@ -22,6 +22,7 @@ require_cmd() {
 print_header "Preflight Checks"
 
 if command -v python3 >/dev/null 2>&1; then
+  run_cmd "Installing tabsdata extras" python3 -m pip install --upgrade 'tabsdata[all]'
   run_cmd "Installing Python dependencies from requirements.txt" python3 -m pip install -r "${ROOT_DIR}/requirements.txt"
 else
   print_error "Missing required command: python3"
