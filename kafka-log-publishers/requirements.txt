@@ -4,8 +4,6 @@
 
 # Requirements for running Tabsdata examples
 
-
-tabsdata[all]
 mysql-connector-python==9.2.0
 psycopg2-binary==2.9.10
 oracledb==3.0.0
