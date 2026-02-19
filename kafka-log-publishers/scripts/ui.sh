@@ -59,8 +59,8 @@ if [ -z "${UI_SH_LOADED:-}" ]; then
     local label="$1"
     shift
     print_step "${label}"
-    "$@" 2>&1 | sed 's/^/    | /'
-    local rc=${PIPESTATUS[0]}
+    "$@"
+    local rc=$?
     if [ "${rc}" -ne 0 ]; then
       print_error "${label} failed"
       return "${rc}"
@@ -73,8 +73,8 @@ if [ -z "${UI_SH_LOADED:-}" ]; then
     shift
     local cmd="$*"
     print_step "${label}"
-    eval "${cmd}" 2>&1 | sed 's/^/    | /'
-    local rc=${PIPESTATUS[0]}
+    eval "${cmd}"
+    local rc=$?
     if [ "${rc}" -ne 0 ]; then
       print_error "${label} failed"
       return "${rc}"
