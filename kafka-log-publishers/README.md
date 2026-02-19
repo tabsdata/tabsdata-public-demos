@@ -11,6 +11,17 @@
 - Python 3.12+
 
 
+## 2. Create and activate a virtual environment
+
+```bash
+python3.12 -m venv tabsdata-venv
+```
+
+```bash
+source tabsdata-venv/bin/activate
+```
+OR use conda/pyenv/etc.
+
 ## 2. Clone the repo
 
 ```bash
@@ -21,19 +32,9 @@ cd tabsdata-public-demos/kafka-log-publishers
 If you already cloned the repo, just `cd` into:
 
 ```bash
-cd /path/to/tabsdata-public-demos/kafka-log-publishers
+cd tabsdata-public-demos/kafka-log-publishers
 ```
 
-## 3. Create and activate a virtual environment
-
-```bash
-python3.12 -m venv tabsdata-venv
-```
-
-```bash
-source tabsdata-venv/bin/activate
-```
-OR use conda/pyenv/etc.
 
 ## 4. Install Python dependencies
 
