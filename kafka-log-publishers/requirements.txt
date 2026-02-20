@@ -12,4 +12,5 @@ snowflake-sqlalchemy==1.7.6
 databricks-sdk==0.57.0
 databricks-sql-connector==4.0.4
 databricks-sqlalchemy==2.0.7
-s3fs==2025.5.1do
+s3fs==2025.5.1
+
