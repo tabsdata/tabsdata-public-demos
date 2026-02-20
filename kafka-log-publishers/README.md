@@ -41,6 +41,7 @@ cd tabsdata-public-demos/kafka-log-publishers
 ```bash
 pip install 'tabsdata[all]' --upgrade 
 pip install mysql-connector-python
+pip install tabsdata-kafka
 ```
 
 ## 5. Verify Docker is running
