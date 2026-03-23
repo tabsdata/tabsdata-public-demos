@@ -31,6 +31,8 @@ TD_ROLE=${TD_ROLE:=sys_admin}
 
 run_cmd "Logging into Tabsdata" td login --server ${TD_SERVER} --user ${TD_USER} --password ${TD_PASSWORD} --role ${TD_ROLE}
 
+exit 0
+
 run_cmd "Creating collection: airport" td collection create --name airport
 
 subscribe="True"
