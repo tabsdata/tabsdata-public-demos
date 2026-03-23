@@ -22,7 +22,13 @@ require_cmd() {
 print_header "Preflight Checks"
 
 if command -v python3 >/dev/null 2>&1; then
-  run_cmd "Installing Python dependencies from requirements.txt" python3 -m pip install -r "${ROOT_DIR}/requirements.txt"
+  print_step "Installing Python dependencies from requirements.txt"
+  if python3 -m pip install -r "${ROOT_DIR}/requirements.txt"; then
+    print_success "Python dependencies installed"
+  else
+    print_warning "Dependency install failed; continuing with existing environment"
+    print_warning "If setup later fails on imports, install manually: python3 -m pip install -r ${ROOT_DIR}/requirements.txt"
+  fi
 else
   print_error "Missing required command: python3"
   missing=1

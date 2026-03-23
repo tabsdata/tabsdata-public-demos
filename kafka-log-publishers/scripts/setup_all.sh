@@ -14,53 +14,47 @@ source "${SCRIPT_DIR}/ui.sh"
 print_header "Tabsdata Airport Demo Setup"
 "${SCRIPT_DIR}/preflight.sh"
 
-"${SCRIPT_DIR}/setup_hashicorp.sh"
-"${SCRIPT_DIR}/setup_mysql.sh"
-"${SCRIPT_DIR}/setup_log_producer.sh"
-"${SCRIPT_DIR}/setup_redpanda.sh"
+SELECTOR="${SCRIPT_DIR}/component_selector.py"
+selection_file="$(mktemp)"
+trap 'rm -f "${selection_file}"' EXIT
 
-run_cmd "Stopping Tabsdata demo server instance" tdserver stop --instance demo 
-run_cmd_sh "Deleting Tabsdata demo server instance" "printf 'yes\n' | tdserver delete --instance demo --force || true"
+run_cmd "Selecting setup components" python3 "${SELECTOR}" select --mode setup --out-file "${selection_file}"
 
-run_cmd "Starting Tabsdata demo server instance" tdserver start --instance demo
+SELECTED_COMPONENTS=()
+while IFS= read -r component; do
+  [ -n "${component}" ] && SELECTED_COMPONENTS+=("${component}")
+done < "${selection_file}"
 
-TD_SERVER=${TD_SERVER:=localhost:2457}
-TD_USER=${TD_USER:=admin}
-TD_PASSWORD=${TD_PASSWORD:=tabsdata}
-TD_ROLE=${TD_ROLE:=sys_admin}
+if [ "${#SELECTED_COMPONENTS[@]}" -eq 0 ]; then
+  print_warning "No components selected. Nothing to set up."
+  exit 0
+fi
 
-run_cmd "Logging into Tabsdata" td login --server ${TD_SERVER} --user ${TD_USER} --password ${TD_PASSWORD} --role ${TD_ROLE}
+contains_component() {
+  local target="$1"
+  local item
+  for item in "${SELECTED_COMPONENTS[@]}"; do
+    if [ "${item}" = "${target}" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
 
-exit 0
+print_step "Selected components: ${SELECTED_COMPONENTS[*]}"
 
-run_cmd "Creating collection: airport" td collection create --name airport
-
-subscribe="True"
-
-(cd "${ROOT_DIR}/tabsdata_functions/sql";
-  run_cmd "Registering SQL publisher" td fn register --coll airport --path 01_flight_pub.py::flight_pub
-  if [ "$subscribe" = "True" ]; then
-      run_cmd "Registering SQL subscriber" td fn register --coll airport --path 02_mysql_sub.py::mysql_sub --update
-  else
-      print_warning "Skipping SQL subscriber setup"
-  fi
-)
-
-print_success "Registered SQL ingestion functions"
-
-td fn trigger --coll airport --name flight_pub
-
-(cd "${ROOT_DIR}/tabsdata_functions/log-publisher";
-  run_cmd "Registering log publisher" td fn register --coll airport --path 09_log_pub.py::publish_air_web_page_views --update
-)
-
-run_cmd "Creating collection: flight_streaming" td collection create --name flight_streaming
-(cd "${ROOT_DIR}/tabsdata_functions/kafka";
-  run_cmd "Registering Kafka publisher" td fn register --coll flight_streaming --path 08_flight_events_pub.py::flight_event_publisher --update
-)
-td fn trigger --coll airport --name publish_air_web_page_views
-
-print_header "Demo Environment Ready"
-print_kv "Redpanda Console" "http://localhost:8080"
-print_kv "Tabsdata UI" "http://localhost:2457"
-print_kv "Log directory" "${ROOT_DIR}/data/td-logs"
+if contains_component "hashicorp"; then
+  "${SCRIPT_DIR}/setup_hashicorp.sh"
+fi
+if contains_component "log_file"; then
+  "${SCRIPT_DIR}/setup_log_producer.sh"
+fi
+if contains_component "mysql"; then
+  "${SCRIPT_DIR}/setup_mysql.sh"
+fi
+if contains_component "redpanda"; then
+  "${SCRIPT_DIR}/setup_redpanda.sh"
+fi
+if contains_component "tabsdata"; then
+  "${SCRIPT_DIR}/setup_tabsdata.sh"
+fi

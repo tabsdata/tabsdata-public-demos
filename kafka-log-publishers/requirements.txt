@@ -5,4 +5,4 @@
 # Requirements for running Tabsdata examples
 
 mysql-connector-python==9.2.0
-
+InquirerPy==0.3.4
