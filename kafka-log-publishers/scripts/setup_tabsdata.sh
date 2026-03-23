@@ -18,7 +18,7 @@ confirm_delete_instance() {
   echo
   print_divider
   printf "%b\n" "${UI_BOLD}${UI_YELLOW}Delete And Rebuild Tabsdata Demo Instance${UI_RESET}"
-  printf "  %bThis will permanently delete instance 'demo' and recreate it.%b\n" "${UI_YELLOW}" "${UI_RESET}"
+  printf "  %bThis will permanently delete instance '%s' and recreate it.%b\n" "${UI_YELLOW}" "${TD_INSTANCE_NAME}" "${UI_RESET}"
   printf "  %bChoose Yes to continue setup, or No to stop this script now.%b\n" "${UI_YELLOW}" "${UI_RESET}"
   print_divider
   printf "%b" "${UI_BOLD}Delete and rebuild instance [y/N]: ${UI_RESET}"
@@ -31,15 +31,15 @@ confirm_delete_instance() {
   esac
 }
 
-run_cmd "Stopping Tabsdata demo server instance" tdserver stop --instance demo
+run_cmd "Stopping Tabsdata server instance: ${TD_INSTANCE_NAME}" tdserver stop --instance "${TD_INSTANCE_NAME}"
 if confirm_delete_instance; then
-  run_cmd_sh "Deleting Tabsdata demo server instance" "printf 'yes\n' | tdserver delete --instance demo --force || true"
+  run_cmd_sh "Deleting Tabsdata server instance: ${TD_INSTANCE_NAME}" "printf 'yes\n' | tdserver delete --instance \"${TD_INSTANCE_NAME}\" --force || true"
 else
   print_warning "User chose not to delete/rebuild Tabsdata instance. Stopping setup_tabsdata.sh."
   exit 0
 fi
 
-run_cmd "Starting Tabsdata demo server instance" tdserver start --instance demo
+run_cmd "Starting Tabsdata server instance: ${TD_INSTANCE_NAME}" tdserver start --instance "${TD_INSTANCE_NAME}"
 
 TD_SERVER=${TD_SERVER:=localhost:2457}
 TD_USER=${TD_USER:=admin}

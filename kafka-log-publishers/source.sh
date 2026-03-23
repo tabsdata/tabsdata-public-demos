@@ -46,5 +46,4 @@ export TD_SERVER=${TD_SERVER:=localhost:2457}
 export TD_USER=${TD_USER:=admin}
 export TD_PASSWORD=${TD_PASSWORD:=tabsdata}
 export TD_ROLE=${TD_ROLE:=sys_admin}
-
-
+export TD_INSTANCE_NAME=${TD_INSTANCE_NAME:=demo}

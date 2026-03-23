@@ -18,7 +18,7 @@ confirm_delete_instance() {
   echo
   print_divider
   printf "%b\n" "${UI_BOLD}${UI_YELLOW}Delete Tabsdata Demo Instance${UI_RESET}"
-  printf "  %bThis will permanently delete instance 'demo'.%b\n" "${UI_YELLOW}" "${UI_RESET}"
+  printf "  %bThis will permanently delete instance '%s'.%b\n" "${UI_YELLOW}" "${TD_INSTANCE_NAME}" "${UI_RESET}"
   printf "  %bChoose No to stop services without deleting the instance.%b\n" "${UI_YELLOW}" "${UI_RESET}"
   print_divider
   printf "%b" "${UI_BOLD}Delete instance while stopping [y/N]: ${UI_RESET}"
@@ -32,12 +32,12 @@ confirm_delete_instance() {
 }
 
 print_header "Stopping Demo Services"
-print_step "Stopping Tabsdata server instance: demo"
+print_step "Stopping Tabsdata server instance: ${TD_INSTANCE_NAME}"
 if command -v tdserver >/dev/null 2>&1; then
-  tdserver stop --instance demo >/dev/null 2>&1 || true
+  tdserver stop --instance "${TD_INSTANCE_NAME}" >/dev/null 2>&1 || true
   print_success "Tabsdata server stop requested"
   if confirm_delete_instance; then
-    run_cmd_sh "Deleting Tabsdata demo server instance" "printf 'yes\n' | tdserver delete --instance demo --force || true"
+    run_cmd_sh "Deleting Tabsdata server instance: ${TD_INSTANCE_NAME}" "printf 'yes\n' | tdserver delete --instance \"${TD_INSTANCE_NAME}\" --force || true"
   else
     print_warning "Skipping Tabsdata demo instance deletion"
   fi
