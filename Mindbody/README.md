@@ -148,6 +148,12 @@ This runs three steps in sequence:
 
 > To run steps individually: `bash scripts/preflight.sh`, `bash scripts/setup_postgres.sh`, `bash scripts/setup_tabsdata.sh`
 
+### 7. Log in to Tabsdata
+
+```bash
+td login --server localhost --user admin --role sys_admin --password tabsdata
+```
+
 ## Tabsdata UI
 
 Open [http://localhost:2457](http://localhost:2457) and sign in with:
@@ -191,9 +197,3 @@ Mindbody/
 ├── source.sh            # Environment variables
 └── requirements.txt
 ```
-
-## Notes
-
-- **Visits ingest** fetches visits per class ID. For studios with many classes this can take several minutes.
-- Cross-collection access requires **bidirectional** permissions. The setup script grants all required directions automatically.
-- For production secret management, see the [Tabsdata HashiCorp Vault integration](https://docs.tabsdata.com/latest/guide/secrets_management/hashicorp/main.html).
