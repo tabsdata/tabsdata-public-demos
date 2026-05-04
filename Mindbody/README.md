@@ -84,11 +84,11 @@ git clone https://github.com/tabsdata/tabsdata-public-demos.git
 cd tabsdata-public-demos/Mindbody
 ```
 
-### 2. Create and activate a conda environment
+### 2. Create and activate a virtual environment
 
 ```bash
-conda create -y --name tabsdata_official python=3.12
-conda activate tabsdata_official
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 pip install tabsdata
 ```
