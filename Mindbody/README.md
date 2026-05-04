@@ -90,7 +90,7 @@ cd tabsdata-public-demos/Mindbody
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install tabsdata
+pip install 'tabsdata[all]'
 ```
 
 ### 3. Configure credentials
