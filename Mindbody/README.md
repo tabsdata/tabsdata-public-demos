@@ -86,14 +86,21 @@ cd tabsdata-public-demos/Mindbody
 
 ### 2. Create and activate a virtual environment
 
+You can use any method you prefer (venv, conda, pyenv, etc.), but **Python 3.12 is required**. Using the standard library:
+
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv mindbody_venv
+source mindbody_venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
 pip install 'tabsdata[all]'
 ```
 
-### 3. Configure credentials
+### 4. Configure credentials
 
 Edit [source.sh](./source.sh) and fill in your Mindbody and PostgreSQL credentials:
 
@@ -123,13 +130,13 @@ export PG_PASSWORD=postgres
 
 > **Sandbox:** Mindbody provides a free sandbox site pre-loaded with test data. The sandbox credentials (`MINDBODY_STUDIO_ID=-99`, `MINDBODY_USERNAME=?`, `MINDBODY_PASSWORD=?`) are already set in `source.sh` so the demo works out of the box without a live site.
 
-### 4. Load credentials into your shell
+### 5. Load credentials into your shell
 
 ```bash
 source ./source.sh
 ```
 
-### 5. Run full setup
+### 6. Run full setup
 
 ```bash
 bash scripts/setup_all.sh
