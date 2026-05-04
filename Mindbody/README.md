@@ -2,6 +2,8 @@
 
 This demo ingests data from the **Mindbody Public API v6** into Tabsdata, processes it through a bronze → silver → gold pipeline, and mirrors all tables to **PostgreSQL** via a subscriber.
 
+> **Platform:** Designed for **macOS** with a **bash/zsh** shell. Windows is not supported.
+
 ## Data Pipeline
 
 ```
@@ -134,7 +136,15 @@ export MINDBODY_PASSWORD=?
 source ./source.sh
 ```
 
-### 6. Run full setup
+### 6. Confirm Docker is running
+
+```bash
+docker ps
+```
+
+If Docker is not running, start Docker Desktop before proceeding.
+
+### 7. Run full setup
 
 ```bash
 bash scripts/setup_all.sh
@@ -148,7 +158,7 @@ This runs three steps in sequence:
 
 > To run steps individually: `bash scripts/preflight.sh`, `bash scripts/setup_postgres.sh`, `bash scripts/setup_tabsdata.sh`
 
-### 7. Log in to Tabsdata
+### 8. Log in to Tabsdata
 
 ```bash
 td login --server localhost --user admin --role sys_admin --password tabsdata
@@ -197,3 +207,11 @@ Mindbody/
 ├── source.sh            # Environment variables
 └── requirements.txt
 ```
+
+## Stopping the Tabsdata Server and Postgres Docker Container
+
+```bash
+bash scripts/stop_all.sh
+```
+
+This stops the Tabsdata server and removes the `td-mindbody-postgres` Docker container. You will be prompted whether to also delete the Tabsdata instance — choose No to stop services while preserving data.
