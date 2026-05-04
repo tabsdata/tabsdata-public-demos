@@ -128,8 +128,6 @@ export MINDBODY_PASSWORD=?
 | `MINDBODY_USERNAME` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox). For a live studio, use the login email of a staff member with **Owner** or **Manager** role. |
 | `MINDBODY_PASSWORD` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox). For a live studio, use the password for the staff member above. |
 
-> **Sandbox:** Mindbody provides a free sandbox site pre-loaded with test data. The sandbox credentials (`MINDBODY_STUDIO_ID=-99`, `MINDBODY_USERNAME=?`, `MINDBODY_PASSWORD=?`) are already set in `source.sh` so the demo works out of the box without a live site.
-
 ### 5. Load credentials into your shell
 
 ```bash
