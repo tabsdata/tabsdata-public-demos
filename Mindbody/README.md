@@ -105,18 +105,18 @@ pip install 'tabsdata[all]'
 Edit [source.sh](./source.sh) and fill in your Mindbody and PostgreSQL credentials:
 
 ```bash
-# Mindbody API
-export MINDBODY_API_KEY=your_api_key_here
-export MINDBODY_STUDIO_ID=your_studio_id_here
-export MINDBODY_USERNAME=your_staff_username
-export MINDBODY_PASSWORD=your_staff_password
-
 # PostgreSQL (defaults work for the Docker container spun up by setup)
 export PG_HOST=localhost
 export PG_PORT=5432
 export PG_DATABASE=mindbody
 export PG_USER=postgres
 export PG_PASSWORD=postgres
+
+# Mindbody API credentials
+export MINDBODY_API_KEY=?
+export MINDBODY_STUDIO_ID=?
+export MINDBODY_USERNAME=?
+export MINDBODY_PASSWORD=?
 ```
 
 #### Getting Mindbody credentials

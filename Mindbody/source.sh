@@ -19,11 +19,8 @@ export PG_PASSWORD=postgres
 
 
 # Mindbody API credentials
-# Get your API key from https://developers.mindbodyonline.com
 export MINDBODY_API_KEY=?
 export MINDBODY_STUDIO_ID=?
-
-# Staff credentials used to obtain a user token for API access
 export MINDBODY_USERNAME=?
 export MINDBODY_PASSWORD=?
 
