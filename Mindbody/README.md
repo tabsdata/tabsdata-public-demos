@@ -125,8 +125,8 @@ export MINDBODY_PASSWORD=?
 |---|---|
 | `MINDBODY_API_KEY` | Create a developer account at [developers.mindbodyonline.com](https://developers.mindbodyonline.com/ui/documentation/public-api#/http/mindbody-public-api-v6-0/introduction/creating-a-mindbody-developer-account). Log in, go to the account dropdown in the top right, click **API Credentials**, and create an API key. |
 | `MINDBODY_STUDIO_ID` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox).   |
-| `MINDBODY_USERNAME` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox). For a live studio, use the login email of a staff member with **Owner** or **Manager** role. |
-| `MINDBODY_PASSWORD` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox). For a live studio, use the password for the staff member above. |
+| `MINDBODY_USERNAME` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox). |
+| `MINDBODY_PASSWORD` | Found in the [Mindbody sandbox portal](https://developers.mindbodyonline.com/ui/onboarding/use-sandbox). |
 
 ### 5. Load credentials into your shell
 
