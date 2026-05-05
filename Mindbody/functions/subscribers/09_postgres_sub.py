@@ -10,14 +10,6 @@ PG_USER = td.EnvironmentSecret("PG_USER")
 PG_PASSWORD = td.EnvironmentSecret("PG_PASSWORD")
 
 INPUT_TABLES = [
-    "bronze/locations_bronze",
-    "bronze/classes_bronze",
-    "bronze/clients_bronze",
-    "bronze/services_bronze",
-    "bronze/products_bronze",
-    "bronze/staff_bronze",
-    "bronze/visits_bronze",
-    "bronze/purchases_bronze",
     "silver/locations_silver",
     "silver/classes_silver",
     "silver/clients_silver",
@@ -30,14 +22,6 @@ INPUT_TABLES = [
 ]
 
 DEST_TABLES = [
-    "locations_bronze",
-    "classes_bronze",
-    "clients_bronze",
-    "services_bronze",
-    "products_bronze",
-    "staff_bronze",
-    "visits_bronze",
-    "purchases_bronze",
     "locations_silver",
     "classes_silver",
     "clients_silver",
@@ -63,14 +47,6 @@ DEST_TABLES = [
     trigger_by=[],
 )
 def postgres_sub(
-    locations_bronze: td.TableFrame,
-    classes_bronze: td.TableFrame,
-    clients_bronze: td.TableFrame,
-    services_bronze: td.TableFrame,
-    products_bronze: td.TableFrame,
-    staff_bronze: td.TableFrame,
-    visits_bronze: td.TableFrame,
-    purchases_bronze: td.TableFrame,
     locations_silver: td.TableFrame,
     classes_silver: td.TableFrame,
     clients_silver: td.TableFrame,
@@ -82,14 +58,6 @@ def postgres_sub(
     client_activity_gold: td.TableFrame,
 ) -> tuple:
     return (
-        locations_bronze,
-        classes_bronze,
-        clients_bronze,
-        services_bronze,
-        products_bronze,
-        staff_bronze,
-        visits_bronze,
-        purchases_bronze,
         locations_silver,
         classes_silver,
         clients_silver,
