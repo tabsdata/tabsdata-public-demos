@@ -2,7 +2,7 @@
 
 This demo ingests data from the **Mindbody Public API v6** into Tabsdata, processes it through a bronze → silver → gold pipeline, and mirrors all tables to **PostgreSQL** via a subscriber.
 
-> **Platform:** Designed for **macOS** with a **bash/zsh** shell. Windows is not supported.
+> **Platform:** While Windows is supported by Tabsdata, this workflow is designed for **macOS** with a **bash/zsh** shell.
 
 ## Data Pipeline
 
@@ -14,7 +14,7 @@ Mindbody Public API v6
   ├── /sale/services        → bronze/services_bronze
   ├── /sale/products        → bronze/products_bronze
   ├── /staff/staff          → bronze/staff_bronze
-  ├── /class/classvisits    → bronze/visits_bronze    (transformer, reads classes)
+  ├── /class/classvisits    → bronze/visits_bronze    (transformer, reads classes_bronze)
   └── /sale/sales           → bronze/purchases_bronze
           │
           ▼ (silver transformers — field selection & cleanup)
@@ -26,12 +26,12 @@ Mindbody Public API v6
   ├── silver/staff_silver
   ├── silver/visits_silver
   └── silver/purchases_silver
-          │
+          │ (clients_silver + visits_silver + purchases_silver)
           ▼ (gold transformer — joins & aggregation)
   └── gold/client_activity_gold
           │
-          ▼ (postgres subscriber)
-  PostgreSQL — all 17 tables
+          ▼ (postgres subscriber — 8 silver + 1 gold)
+  PostgreSQL
 ```
 
 ## Tables Produced
@@ -39,37 +39,37 @@ Mindbody Public API v6
 ### Bronze
 Raw data from the Mindbody API with no modifications.
 
-| Table | Source Endpoint | Description |
-|---|---|---|
-| `locations_bronze` | `/site/locations` | Studio locations |
-| `classes_bronze` | `/class/classes` | Scheduled classes |
-| `clients_bronze` | `/client/clients` | Client profiles |
-| `services_bronze` | `/sale/services` | Pricing plans and passes |
-| `products_bronze` | `/sale/products` | Retail products |
-| `staff_bronze` | `/staff/staff` | Staff members |
-| `visits_bronze` | `/class/classvisits` | Per-class visit records |
-| `purchases_bronze` | `/sale/sales` | Purchase transactions (one row per line item) |
+| Function | Input Type | Input Data | Output Table | Description |
+|---|---|---|---|---|
+| `locations_pub` | API Endpoint | `/site/locations` | `locations_bronze` | Studio locations |
+| `classes_pub` | API Endpoint | `/class/classes` | `classes_bronze` | Scheduled classes |
+| `clients_pub` | API Endpoint | `/client/clients` | `clients_bronze` | Client profiles |
+| `services_pub` | API Endpoint | `/sale/services` | `services_bronze` | Pricing plans and passes |
+| `products_pub` | API Endpoint | `/sale/products` | `products_bronze` | Retail products |
+| `staff_pub` | API Endpoint | `/staff/staff` | `staff_bronze` | Staff members |
+| `visits_trf` | Table + API Endpoint | `classes_bronze` / `/class/classvisits` | `visits_bronze` | Per-class visit records |
+| `purchases_pub` | API Endpoint | `/sale/sales` | `purchases_bronze` | Purchase transactions (one row per line item) |
 
 ### Silver
 Cleaned bronze tables with irrelevant, null, and sensitive fields removed.
 
-| Table | Description |
-|---|---|
-| `locations_silver` | Core location fields |
-| `classes_silver` | Class schedule with program and level info |
-| `clients_silver` | Client identity, contact, address, status, and communication preferences |
-| `services_silver` | Service/pass definitions with pricing and expiration |
-| `products_silver` | Product catalog with pricing and categorization |
-| `staff_silver` | Staff identity, contact, and role flags |
-| `visits_silver` | Visit records with service and program details |
-| `purchases_silver` | Sale header + line item fields with pricing and tax |
+| Function | Input Type | Input Data | Output Table | Description |
+|---|---|---|---|---|
+| `locations_silver_trf` | Table | `locations_bronze` | `locations_silver` | Core location fields |
+| `classes_silver_trf` | Table | `classes_bronze` | `classes_silver` | Class schedule with program and level info |
+| `clients_silver_trf` | Table | `clients_bronze` | `clients_silver` | Client identity, contact, address, status, and communication preferences |
+| `services_silver_trf` | Table | `services_bronze` | `services_silver` | Service/pass definitions with pricing and expiration |
+| `products_silver_trf` | Table | `products_bronze` | `products_silver` | Product catalog with pricing and categorization |
+| `staff_silver_trf` | Table | `staff_bronze` | `staff_silver` | Staff identity, contact, and role flags |
+| `visits_silver_trf` | Table | `visits_bronze` | `visits_silver` | Visit records with service and program details |
+| `purchases_silver_trf` | Table | `purchases_bronze` | `purchases_silver` | Sale header + line item fields with pricing and tax |
 
 ### Gold
 Aggregated analytics tables built from silver.
 
-| Table | Description |
-|---|---|
-| `client_activity_gold` | One row per client: `num_classes`, `num_visits`, `num_purchases`, `total_purchase_amount` — clients with zero activity across all three are excluded |
+| Function | Input Type | Input Data | Output Table | Description |
+|---|---|---|---|---|
+| `client_activity_gold_trf` | Table | `clients_silver`, `visits_silver`, `purchases_silver` | `client_activity_gold` | One row per client: `num_visits`, `num_purchases`, `total_purchase_amount` — zero-activity clients excluded |
 
 ## Requirements
 
@@ -197,7 +197,7 @@ Mindbody/
 │   ├── bronze/          # Publishers and visit transformer (raw ingest)
 │   ├── silver/          # Field-selection transformers (one per entity)
 │   ├── gold/            # Aggregation transformers
-│   └── subscribers/     # PostgreSQL subscriber (all 17 tables)
+│   └── subscribers/     # PostgreSQL subscriber (8 silver + 1 gold)
 ├── scripts/
 │   ├── setup_all.sh     # Full setup (preflight + postgres + tabsdata)
 │   ├── preflight.sh     # Dependency checks

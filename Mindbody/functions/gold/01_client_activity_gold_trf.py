@@ -21,19 +21,16 @@ def client_activity_gold_trf(
 
     if visits_silver is not None and not visits_silver.is_empty():
         visit_counts = visits_silver.group_by(td.col("ClientId")).agg(
-            (td.col("ClassId") > 0).sum().alias("num_classes"),
-            (td.col("AppointmentId") > 0).sum().alias("num_visits"),
+            td.col("Id").count().alias("num_visits"),
         )
         client_activity = client_activity.join(
             visit_counts, left_on="Id", right_on="ClientId", how="left"
         )
         client_activity = client_activity.with_columns(
-            td.col("num_classes").fill_null(0),
             td.col("num_visits").fill_null(0),
         )
     else:
         client_activity = client_activity.with_columns(
-            td.lit(0).alias("num_classes"),
             td.lit(0).alias("num_visits"),
         )
 
@@ -56,8 +53,7 @@ def client_activity_gold_trf(
         )
 
     client_activity = client_activity.filter(
-        (td.col("num_classes") > 0)
-        | (td.col("num_visits") > 0)
+        (td.col("num_visits") > 0)
         | (td.col("num_purchases") > 0)
     )
 
