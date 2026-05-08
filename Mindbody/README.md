@@ -6,7 +6,7 @@ This demo ingests data from the **Mindbody Public API v6** into Tabsdata, proces
 
 ## YouTube Video Walkthrough
 
-[![▶ Watch on YouTube](https://img.youtube.com/vi/hK9n2AkxkFQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=hK9n2AkxkFQ)
+[![▶ Watch on YouTube](assets/image_with_play_button.png)](https://www.youtube.com/watch?v=hK9n2AkxkFQ)
 
 ## Workflow Diagram
 
