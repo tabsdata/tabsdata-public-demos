@@ -7,33 +7,17 @@ This demo ingests data from the **Mindbody Public API v6** into Tabsdata, proces
 ## Data Pipeline
 
 ```
-[Bronze — raw ingest from Mindbody API]
-  locations_bronze    ← /site/locations
-  classes_bronze      ← /class/classes
-  clients_bronze      ← /client/clients
-  services_bronze     ← /sale/services
-  products_bronze     ← /sale/products
-  staff_bronze        ← /staff/staff
-  visits_bronze       ← /class/classvisits  (reads classes_bronze)
-  purchases_bronze    ← /sale/sales
-          │
-          ▼
-[Silver — field selection & cleanup]
-  locations_silver
-  classes_silver
-  clients_silver
-  services_silver
-  products_silver
-  staff_silver
-  visits_silver
-  purchases_silver
-          │
-          ▼
-[Gold — joins & aggregation]
-  client_activity_gold   ← clients_silver + visits_silver + purchases_silver
-          │
-          ▼
-[PostgreSQL — 8 silver + 1 gold]
+API Endpoint              Bronze                 Silver                  Gold                  Destination
+
+/site/locations        → locations_bronze     → locations_silver   ─────────────────────────→ PostgreSQL
+/class/classes         → classes_bronze       → classes_silver     ─────────────────────────→ PostgreSQL
+/client/clients        → clients_bronze       → clients_silver     ──┐ ──────────────────────→ PostgreSQL
+/sale/services         → services_bronze      → services_silver    │ ─────────────────────────→ PostgreSQL
+/sale/products         → products_bronze      → products_silver    │ ─────────────────────────→ PostgreSQL
+/staff/staff           → staff_bronze         → staff_silver       │ ─────────────────────────→ PostgreSQL
+classes_bronze +       → visits_bronze        → visits_silver      ├→ client_activity_gold ──→ PostgreSQL
+  /class/classvisits                                                │
+/sale/sales            → purchases_bronze     → purchases_silver   ──┘ ──────────────────────→ PostgreSQL
 ```
 
 ## Tables Produced
