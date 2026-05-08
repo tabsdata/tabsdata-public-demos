@@ -7,17 +7,31 @@ This demo ingests data from the **Mindbody Public API v6** into Tabsdata, proces
 ## Data Pipeline
 
 ```
-API Endpoint              Bronze                 Silver                  Gold                  Destination
-
-/site/locations        → locations_bronze     → locations_silver   ─────────────────────────→ PostgreSQL
-/class/classes         → classes_bronze       → classes_silver     ─────────────────────────→ PostgreSQL
-/client/clients        → clients_bronze       → clients_silver     ──┐ ──────────────────────→ PostgreSQL
-/sale/services         → services_bronze      → services_silver    │ ─────────────────────────→ PostgreSQL
-/sale/products         → products_bronze      → products_silver    │ ─────────────────────────→ PostgreSQL
-/staff/staff           → staff_bronze         → staff_silver       │ ─────────────────────────→ PostgreSQL
-classes_bronze +       → visits_bronze        → visits_silver      ├→ client_activity_gold ──→ PostgreSQL
-  /class/classvisits                                                │
-/sale/sales            → purchases_bronze     → purchases_silver   ──┘ ──────────────────────→ PostgreSQL
+Mindbody Public API v6
+  ├── /site/locations       → bronze/locations_bronze
+  ├── /class/classes        → bronze/classes_bronze
+  ├── /client/clients       → bronze/clients_bronze
+  ├── /sale/services        → bronze/services_bronze
+  ├── /sale/products        → bronze/products_bronze
+  ├── /staff/staff          → bronze/staff_bronze
+  ├── /class/classvisits    → bronze/visits_bronze    (transformer, reads classes_bronze)
+  └── /sale/sales           → bronze/purchases_bronze
+          │
+          ▼ (silver transformers — field selection & cleanup)
+  ├── silver/locations_silver
+  ├── silver/classes_silver
+  ├── silver/clients_silver
+  ├── silver/services_silver
+  ├── silver/products_silver
+  ├── silver/staff_silver
+  ├── silver/visits_silver
+  └── silver/purchases_silver
+          │ (clients_silver + visits_silver + purchases_silver)
+          ▼ (gold transformer — joins & aggregation)
+  └── gold/client_activity_gold
+          │
+          ▼ (postgres subscriber — 8 silver + 1 gold)
+  PostgreSQL
 ```
 
 ## Tables Produced
