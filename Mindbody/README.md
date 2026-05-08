@@ -6,33 +6,7 @@ This demo ingests data from the **Mindbody Public API v6** into Tabsdata, proces
 
 ## Workflow Diagram
 
-```
-Bronze
-  locations_pub         → locations_bronze
-  classes_pub           → classes_bronze
-  clients_pub           → clients_bronze
-  services_pub          → services_bronze
-  products_pub          → products_bronze
-  staff_pub             → staff_bronze
-  visits_trf            → visits_bronze
-  purchases_pub         → purchases_bronze
-
-Silver
-  locations_silver_trf  → locations_silver
-  classes_silver_trf    → classes_silver
-  clients_silver_trf    → clients_silver
-  services_silver_trf   → services_silver
-  products_silver_trf   → products_silver
-  staff_silver_trf      → staff_silver
-  visits_silver_trf     → visits_silver
-  purchases_silver_trf  → purchases_silver
-
-Gold
-  client_activity_gold_trf → client_activity_gold
-
-Subscribers
-  postgres_sub          → PostgreSQL
-```
+![Data Pipeline](assets/1_bMXeZWd7UNFLWwoWX5FPdw.png)
 
 ## Tables Produced
 
