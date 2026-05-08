@@ -4,7 +4,7 @@ This demo ingests data from the **Mindbody Public API v6** into Tabsdata, proces
 
 > **Platform:** While Windows is supported by Tabsdata, this workflow is designed for **macOS** with a **bash/zsh** shell.
 
-## Data Pipeline
+## Workflow Diagram
 
 ```
 Bronze
