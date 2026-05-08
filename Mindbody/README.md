@@ -1,6 +1,6 @@
 # Mindbody → Tabsdata Demo
 
-This demo ingests data from the **Mindbody Public API v6** into Tabsdata, processes it through a bronze → silver → gold pipeline, and mirrors all tables to **PostgreSQL** via a subscriber.
+This demo ingests data from the **Mindbody Public API v6** into Tabsdata, processes it through a bronze → silver → gold workflow, and subscribes all silver and gold tables to **PostgreSQL**.
 
 > **Platform:** While Windows is supported by Tabsdata, this workflow is designed for **macOS** with a **bash/zsh** shell.
 
