@@ -20,7 +20,7 @@ export PG_PASSWORD=postgres
 
 # Mindbody API credentials
 export MINDBODY_API_KEY=?
-export MINDBODY_STUDIO_ID=?
+export MINDBODY_STUDIO_ID='-99'
 export MINDBODY_USERNAME=?
 export MINDBODY_PASSWORD=?
 
